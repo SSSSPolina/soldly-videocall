@@ -1,0 +1,11 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="zoom-app.svg" clip-path="url(#clip0_1457_1287)">
+<path id="Vector" d="M8.99982 18C13.9706 18 18 13.9703 18 8.99982C18 4.02937 13.9706 0 8.99982 0C4.02901 0 0 4.02937 0 8.99982C0 13.9703 4.02937 18 8.99982 18Z" fill="var(--fill-0, #2196F3)"/>
+<path id="Vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M5.28131 11.5723H11.2337V7.20753C11.2337 6.54994 10.7008 6.01705 10.0432 6.01705H4.09083V10.3818C4.09083 11.0394 4.62372 11.5723 5.28131 11.5723ZM12.027 9.98532L14.408 11.5723V6.01705L12.0274 7.60436L12.027 9.98532Z" fill="var(--fill-0, white)"/>
+</g>
+<defs>
+<clipPath id="clip0_1457_1287">
+<rect width="18" height="18" fill="white"/>
+</clipPath>
+</defs>
+</svg>
