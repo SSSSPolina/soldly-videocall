@@ -36,7 +36,7 @@ const TabOverview = () => (
       { label: 'КЛЮЧОВІ ДОМОВЛЕНОСТІ', text: 'Soldly AI інтегрується з Binotel напряму — без зміни процесів команди. Платформа аналізуватиме як телефонні дзвінки, так і відеодзвінки менеджерів. Домовились: Дмитро надішле приклад готового аналізу реального дзвінку з продажу Touch + доступ до тестового кабінету на 7 днів для 3 менеджерів. Павло підключить запис дзвінків і дасть фідбек після першого тижня.' },
       { label: 'ПИТАННЯ ТА ВІДПОВІДІ', text: 'П: Чи бачу я де саме менеджер облажався на дзвінку? — В: Так, Soldly AI показує момент з таймкодом — де клієнт засумнівався, де менеджер не відпрацював заперечення, де змінилась емоція. П: А відеодзвінки теж аналізуються? — В: Так, повністю — транскрипція, оцінка менеджера, готовність клієнта, задачі. П: Як швидко підключитись до Binotel? — В: Інтеграція займає до 15 хвилин, ми допомагаємо.' },
     ].map((row, i) => (
-      <div key={i} style={{ display: 'grid', gridTemplateColumns: '160px 1fr', borderBottom: '1px solid #f0eff5' }}>
+      <div key={i} className="analysis-overview-row" style={{ display: 'grid', gridTemplateColumns: '160px 1fr', borderBottom: '1px solid #f0eff5' }}>
         <div style={{ padding: '18px 16px', borderRight: '1px solid #f0eff5' }}>
           <span style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 9.5, fontWeight: 700, color: '#b0aed0', letterSpacing: '0.8px', textTransform: 'uppercase' as const, lineHeight: 1.4, display: 'block' }}>{row.label}</span>
         </div>
@@ -45,7 +45,7 @@ const TabOverview = () => (
         </div>
       </div>
     ))}
-    <div style={{ display: 'grid', gridTemplateColumns: '160px 1fr' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: '160px 1fr' }} className="analysis-overview-row analysis-overview-row--steps">
       <div style={{ padding: '18px 16px', borderRight: '1px solid #f0eff5' }}>
         <span style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 9.5, fontWeight: 700, color: '#b0aed0', letterSpacing: '0.8px', textTransform: 'uppercase' as const }}>НАСТУПНІ КРОКИ</span>
       </div>
@@ -206,26 +206,40 @@ const AnalysisSection: React.FC = () => {
   const [hintVisible, setHintVisible] = useState(true);
 
   return (
-    <section style={{ background: '#f8f7fc', padding: '100px 24px' }}>
+    <section className="max-md:py-12 max-md:px-4 md:py-[100px] md:px-6" style={{ background: '#f8f7fc' }}>
+      <style>{`
+        @media (max-width: 639px) {
+          .analysis-overview-row {
+            grid-template-columns: 1fr !important;
+          }
+          .analysis-overview-row > div:first-child {
+            border-right: none !important;
+            padding-bottom: 12px !important;
+          }
+          .analysis-overview-row:not(.analysis-overview-row--steps) > div:first-child {
+            border-bottom: 1px solid #f0eff5;
+          }
+        }
+      `}</style>
 
-      <div style={{ textAlign: 'center', marginBottom: 56 }}>
-        <h2 style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 'clamp(28px, 3.5vw, 48px)', fontWeight: 700, letterSpacing: '-2px', color: '#000852', lineHeight: 1.1, marginBottom: 16 }}>
+      <div style={{ textAlign: 'center', marginBottom: 36 }} className="max-md:mb-9 md:mb-[56px]">
+        <h2 style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 'clamp(22px, 5.5vw, 48px)', fontWeight: 700, letterSpacing: '-2px', color: '#000852', lineHeight: 1.1, marginBottom: 16, padding: '0 4px' }}>
           AI аналізує кожен дзвінок.{' '}
           <span style={{ color: '#6B2EFF' }}>Ви бачите повну картину.</span>
         </h2>
-        <p style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 18, color: '#5a5d8d', maxWidth: 560, margin: '0 auto' }}>
+        <p style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 'clamp(15px, 3.8vw, 18px)', color: '#5a5d8d', maxWidth: 560, margin: '0 auto', padding: '0 8px', lineHeight: 1.55 }}>
           Після кожної зустрічі — готовий аналіз менеджера, клієнта, ключові домовленості та задачі.
         </p>
       </div>
 
-      <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', gap: 20, alignItems: 'stretch', height: 620 }}>
+      <div className="max-w-[1100px] mx-auto w-full flex flex-col md:flex-row gap-5 md:items-stretch md:min-h-[620px] md:max-h-[min(720px,85vh)]">
 
         {/* ─── ЛІВА КАРТКА ─── */}
-        <div style={{ flex: 1, background: 'white', borderRadius: 20, border: '1px solid #e8e7f0', boxShadow: '0 8px 40px rgba(0,8,82,0.07)', overflow: 'hidden', display: 'flex', flexDirection: 'column', minHeight: 0 }}>
+        <div className="flex-1 min-h-0 max-md:min-h-[520px] order-2 md:order-1 w-full min-w-0 bg-white rounded-[20px] border border-[#e8e7f0] shadow-[0_8px_40px_rgba(0,8,82,0.07)] overflow-hidden flex flex-col">
 
           {/* Хедер */}
-          <div style={{ padding: '24px 28px', borderBottom: '1px solid #f0eff5' }}>
-            <h3 style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 20, fontWeight: 700, color: DARK, marginBottom: 12 }}>
+          <div className="max-md:px-4 max-md:pt-4 max-md:pb-3.5 md:px-7 md:pt-6 md:pb-6 border-b border-[#f0eff5]">
+            <h3 style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 'clamp(16px, 4vw, 20px)', fontWeight: 700, color: DARK, marginBottom: 12, lineHeight: 1.25 }}>
               Демо-дзвінок: Soldly AI → Touch
             </h3>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12, flexWrap: 'wrap' }}>
@@ -235,7 +249,7 @@ const AnalysisSection: React.FC = () => {
               <span style={{ color: '#ddddf0' }}>|</span>
               <span style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 12, fontWeight: 600, color: PURPLE, background: '#f0ebff', borderRadius: 8, padding: '4px 12px', cursor: 'pointer', border: '1px solid rgba(107,46,255,0.2)' }}>👤 + контакт</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', paddingBottom: 4 }} className="-mx-1 px-1 max-md:overflow-x-auto max-md:[-webkit-overflow-scrolling:touch] md:overflow-visible md:mx-0 md:px-0">
               {[1,2,3,4,5].map(i => <span key={i} style={{ fontSize: 16, color: '#d0cfdf' }}>☆</span>)}
               <span style={{ width: 1, height: 18, background: '#e0dff0', margin: '0 6px', display: 'inline-block' }} />
               {['✓','🔒','↻','⬆','✉','↗','🗑'].map((icon, i) => (
@@ -276,15 +290,15 @@ const AnalysisSection: React.FC = () => {
                 }} />
               </div>
             )}
-            <div style={{ padding: '0 8px', borderBottom: '2px solid #f0eff5', display: 'flex', background: 'white' }}>
+            <div className="flex max-md:overflow-x-auto overflow-y-hidden -mx-1 px-1 pb-0.5 max-md:[-webkit-overflow-scrolling:touch] max-md:scroll-smooth md:overflow-visible md:mx-0 md:px-0 gap-0 border-b-2 border-[#f0eff5] bg-white">
             {TABS.map((tab, i) => (
               <button
                 key={i}
                 onClick={() => { setActiveTab(i); setHintVisible(false); }}
+                className="max-md:min-w-[4.75rem] max-md:shrink-0 md:min-w-0 md:flex-1"
                 style={{
-                  flex: 1,
                   fontFamily: "'Work Sans', sans-serif",
-                  fontSize: 12.5, fontWeight: activeTab === i ? 700 : 500,
+                  fontSize: 'clamp(10px, 2.8vw, 12.5px)', fontWeight: activeTab === i ? 700 : 500,
                   color: activeTab === i ? PURPLE : '#8b8db0',
                   background: activeTab === i ? 'rgba(107,46,255,0.06)' : 'transparent',
                   border: 'none',
@@ -316,7 +330,7 @@ const AnalysisSection: React.FC = () => {
         </div>
 
         {/* ─── ПРАВА ЧАСТИНА — відео + чат ─── */}
-        <div style={{ width: 300, flexShrink: 0, background: 'white', borderRadius: 20, border: '1px solid #e8e7f0', boxShadow: '0 8px 40px rgba(0,8,82,0.07)', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+        <div className="w-full md:w-[300px] md:flex-shrink-0 order-1 md:order-2 flex flex-col min-h-0 min-w-0 bg-white rounded-[20px] border border-[#e8e7f0] shadow-[0_8px_40px_rgba(0,8,82,0.07)] overflow-hidden max-md:min-h-[420px] max-md:max-h-[85vh]">
 
           {/* Відео */}
           <div style={{ overflow: 'hidden', background: '#1c1c2e', flexShrink: 0 }}>
@@ -339,12 +353,15 @@ const AnalysisSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Чат */}
-          <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
-            <div style={{ padding: '12px 16px', display: 'flex', justifyContent: 'flex-end', borderBottom: '1px solid #f0eff5' }}>
+          {/* Чат — транскрипт скролиться всередині картки */}
+          <div className="min-h-0 flex-1 flex flex-col overflow-hidden">
+            <div className="flex-shrink-0" style={{ padding: '12px 16px', display: 'flex', justifyContent: 'flex-end', borderBottom: '1px solid #f0eff5' }}>
               <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#f0ebff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13 }}>👤</div>
             </div>
-            <div style={{ flex: 1, minHeight: 0, padding: '12px 14px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 14 }}>
+            <div
+              className="min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain [-webkit-overflow-scrolling:touch]"
+              style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 14 }}
+            >
               {[
                 { who: 'ДЛ', name: 'Дмитро', time: '0:12', color: PURPLE, text: 'Павле, добрий день! Дякую що виділили час. Розкажіть трохи про вашу команду — як зараз організований продаж?' },
                 { who: 'ПМ', name: 'Павло', time: '0:22', color: '#2a7d4f', text: 'Привіт! Ми — Touch, продаємо кав\'ярні самообслуговування. У нас 20 менеджерів, всі продають по телефону і через відеодзвінки. Використовуємо Binotel для телефонії.' },
@@ -360,20 +377,20 @@ const AnalysisSection: React.FC = () => {
                 { who: 'ДЛ', name: 'Дмитро', time: '5:24', color: PURPLE, text: 'Давайте зробимо так — запускаємо вам 3 дні безкоштовного доступу. Підключите своїх менеджерів і побачите результат на реальних дзвінках.' },
                 { who: 'ПМ', name: 'Павло', time: '5:46', color: '#2a7d4f', text: 'Давайте. Якщо результат такий як ти показав — беремо всіх 20.' },
               ].map((msg, i) => (
-                <div key={i} style={{ display: 'flex', gap: 8 }}>
+                <div key={i} className="min-w-0 flex gap-2">
                   <div style={{ width: 28, height: 28, borderRadius: '50%', background: msg.color, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Work Sans', sans-serif", fontSize: 9, fontWeight: 700, color: 'white', marginTop: 1 }}>{msg.who}</div>
-                  <div style={{ flex: 1 }}>
+                  <div className="min-w-0 flex-1">
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
                       <span style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 12, fontWeight: 600, color: msg.color }}>{msg.name}</span>
                       <span style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 10, color: '#b0aed0' }}>{msg.time}</span>
                       <span style={{ fontSize: 10, color: '#b0aed0', cursor: 'pointer' }}>▶</span>
                     </div>
-                    <p style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 12, color: '#3d3f6e', lineHeight: 1.6, margin: 0 }}>{msg.text}</p>
+                    <p style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 12, color: '#3d3f6e', lineHeight: 1.6, margin: 0, overflowWrap: 'anywhere' as const, wordBreak: 'break-word' as const }}>{msg.text}</p>
                   </div>
                 </div>
               ))}
             </div>
-            <div style={{ padding: '12px 16px', borderTop: '1px solid #f0eff5', display: 'flex', justifyContent: 'flex-end' }}>
+            <div className="flex-shrink-0" style={{ padding: '12px 16px', borderTop: '1px solid #f0eff5', display: 'flex', justifyContent: 'flex-end' }}>
               <button style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: `linear-gradient(135deg, ${PURPLE}, #9b6dff)`, borderRadius: 24, padding: '10px 18px', border: 'none', cursor: 'pointer', boxShadow: '0 4px 16px rgba(107,46,255,0.3)' }}>
                 <span style={{ fontSize: 14 }}>✨</span>
                 <span style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 13, fontWeight: 600, color: 'white' }}>AI Insights</span>

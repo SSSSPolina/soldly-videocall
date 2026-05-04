@@ -12,11 +12,14 @@ import {
 function App() {
   return (
     <>
-      <HeroSection />       {/* 1 */}
-      <AnalysisSection />   {/* 2 */}
-      <FeatureSection />    {/* 3, 4 */}
-      <CrmSection />        {/* 5 */}
-      <AIInsightsSection /> {/* 6 */}
+      <HeroSection />
+      <AnalysisSection />
+      <FeatureSection />
+      <CrmSection />
+      <AIInsightsSection />
+      <div className="md:hidden">
+        <PromptsSection />
+      </div>
       <CoachingSection />
       <FAQSection />
       <FooterSection />

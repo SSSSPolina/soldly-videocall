@@ -12,3 +12,12 @@ html, body, #root {
   width: 100%;
   min-height: 100vh;
 }
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: clip;
+  -webkit-overflow-scrolling: touch;
+}

@@ -7,16 +7,6 @@ const thumb2 = '/figma-assets/hero/thumb2.png';
 const thumb3 = '/figma-assets/hero/thumb3.png';
 const thumb4 = '/figma-assets/hero/thumb4.png';
 const thumb5 = '/figma-assets/hero/thumb5.png';
-const hubspot = '/figma-assets/hero/hubspot.svg';
-const zoom = '/figma-assets/hero/zoom.svg';
-const slack = '/figma-assets/hero/slack.svg';
-const gmeet = '/figma-assets/hero/gmeet.svg';
-const notion = '/figma-assets/hero/notion.svg';
-const teams = '/figma-assets/hero/teams.svg';
-const stars = '/figma-assets/hero/stars.svg';
-const sendIcon = '/figma-assets/hero/send.svg';
-const checkIcon = '/figma-assets/hero/check.svg';
-const g2Star = '/figma-assets/hero/g2-star.svg';
 
 const PURPLE = '#6B2EFF';
 
@@ -52,8 +42,9 @@ const MeetingCard: React.FC<{ thumb: string; label: string; title: string; date:
         ref={ref}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        className="snap-center shrink-0 max-md:snap-start md:snap-none w-[min(210px,calc(100vw-56px))] md:w-[210px]"
         style={{
-          width: 210, flexShrink: 0, borderRadius: 14,
+          flexShrink: 0, borderRadius: 14,
           boxShadow: hovered ? '0 12px 36px rgba(107,46,255,0.18)' : '0 2px 16px rgba(0,8,82,0.09)',
           background: 'white', overflow: 'hidden',
           display: 'flex', flexDirection: 'column' as const,
@@ -94,8 +85,7 @@ const MeetingCard: React.FC<{ thumb: string; label: string; title: string; date:
 const HeroSection: React.FC = () => {
   return (
     <div
-      className="relative w-full overflow-hidden"
-      style={{ minHeight: '100vh' }}
+      className="relative w-full overflow-hidden min-h-[100dvh] md:min-h-screen"
     >
       {/* Фоновий градієнт-зображення */}
       <img
@@ -112,11 +102,11 @@ const HeroSection: React.FC = () => {
       <Navbar />
 
       {/* ─── MAIN CONTENT ─── */}
-      <div className="relative flex flex-col items-center text-center" style={{ paddingTop: 80, paddingLeft: 24, paddingRight: 24 }}>
+      <div className="relative flex flex-col items-center text-center px-4 pt-[88px] pb-12 md:pt-24 md:pb-16 md:px-6">
 
         {/* Верхній бейдж */}
         <div
-          className="inline-flex items-center gap-2 mb-6"
+          className="inline-flex flex-wrap items-center justify-center gap-2 mb-5 md:mb-6 max-w-[min(100%,520px)]"
           style={{
             background: 'rgba(255,255,255,0.72)',
             backdropFilter: 'blur(8px)',
@@ -127,22 +117,23 @@ const HeroSection: React.FC = () => {
           }}
         >
           <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#00d6ab', display: 'inline-block', flexShrink: 0 }} />
-          <span style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 13, fontWeight: 600, color: PURPLE, letterSpacing: '-0.2px' }}>
+          <span className="text-left md:text-center" style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 'clamp(11px, 3.2vw, 13px)', fontWeight: 600, color: PURPLE, letterSpacing: '-0.2px', lineHeight: 1.35 }}>
             AI-нотатник для Zoom, Google Meet та Teams
           </span>
         </div>
 
         {/* ─── ЗАГОЛОВОК ─── */}
         <h1
+          className="max-md:text-[clamp(30px,7vw,42px)] md:text-[clamp(38px,4.5vw,64px)]"
           style={{
             fontFamily: "'Work Sans', sans-serif",
-            fontSize: 'clamp(38px, 4.5vw, 64px)',
             fontWeight: 700,
             lineHeight: 1.08,
-            letterSpacing: '-2.5px',
+            letterSpacing: 'clamp(-2px, -0.4vw, -2.5px)',
             color: '#000852',
             maxWidth: 1000,
             marginBottom: 20,
+            padding: '0 2px',
           }}
         >
           AI-аналіз ваших відеодзвінків.{' '}
@@ -151,31 +142,33 @@ const HeroSection: React.FC = () => {
 
         {/* ─── ПІДЗАГОЛОВОК ─── */}
         <p
+          className="max-md:text-[clamp(15px,4vw,18px)] md:text-[20px]"
           style={{
             fontFamily: "'Work Sans', sans-serif",
-            fontSize: 20,
             fontWeight: 400,
             color: '#3d3f6e',
             letterSpacing: '-0.5px',
             lineHeight: 1.55,
             maxWidth: 700,
-            marginBottom: 32,
+            marginBottom: 28,
+            padding: '0 4px',
           }}
         >
           Soldly Meet записує, транскрибує й аналізує кожну відеозустріч. <strong style={{ fontWeight: 600, color: '#000852' }}>Домовленості фіксуються в CRM автоматично</strong> — без ручних нотаток.
         </p>
 
         {/* ─── CTA ─── */}
-        <div className="flex items-center gap-3 mb-10">
+        <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3 mb-8 md:mb-10 w-full max-w-md md:max-w-none justify-center px-1">
           <button
+            className="w-full md:w-auto"
             style={{
               fontFamily: "'Work Sans', sans-serif",
-              fontSize: 17,
+              fontSize: 'clamp(15px, 3.5vw, 17px)',
               fontWeight: 600,
               color: 'white',
               background: PURPLE,
               borderRadius: 14,
-              padding: '14px 32px',
+              padding: '14px 28px',
               border: 'none',
               cursor: 'pointer',
               boxShadow: '0 8px 24px rgba(107,46,255,0.35)',
@@ -187,7 +180,10 @@ const HeroSection: React.FC = () => {
         </div>
 
         {/* ─── КАРТКИ ДЗВІНКІВ ─── */}
-        <div style={{ display: 'flex', alignItems: 'stretch', justifyContent: 'center', gap: 10, marginBottom: 40 }}>
+        <div
+          className="w-full max-w-[100vw] flex gap-2.5 md:gap-3 mb-8 md:mb-10 overflow-x-auto overflow-y-hidden pb-2 md:pb-0 md:overflow-visible md:flex-wrap md:justify-center px-1 md:px-0 snap-x snap-mandatory md:snap-none [-webkit-overflow-scrolling:touch] scroll-smooth"
+          style={{ scrollbarWidth: 'thin' }}
+        >
           {meetings.map((m, i) => (
             <MeetingCard key={i} {...m} delay={300 + i * 120} />
           ))}

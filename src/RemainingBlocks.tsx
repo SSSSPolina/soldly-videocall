@@ -9,7 +9,7 @@ const clientLogos = [
 ];
 
 export const ClientsSection: React.FC = () => (
-  <section style={{ background: 'white', padding: '80px 24px', borderTop: '1px solid #f0eff5' }}>
+  <section className="max-md:py-12 max-md:px-4 md:py-20 md:px-6" style={{ background: 'white', borderTop: '1px solid #f0eff5' }}>
     <div style={{ maxWidth: 1100, margin: '0 auto' }}>
       <h2 style={{
         fontFamily: "'Work Sans', sans-serif", fontSize: 'clamp(22px, 2.5vw, 36px)',
@@ -35,27 +35,20 @@ export const ClientsSection: React.FC = () => (
 );
 
 // ─── БЛОК 5: AI промпти ────────────────────────────────────────────────────
-const prompts = [
-  { role: 'КЕРІВНИК ВІДДІЛУ ПРОДАЖІВ', text: 'Які заперечення найчастіше виникали на дзвінках цього тижня?' },
-  { role: 'PRODUCT OWNER', text: 'Які фідбеки на наш продукт прозвучали на CS-дзвінках цього місяця?' },
-  { role: 'МАРКЕТИНГ', text: 'Які болі клієнтів згадувались на discovery-колах? Як сейлзи відповідали?' },
-  { role: 'МАРКЕТИНГ-ЛІД', text: 'Знайди цитати клієнтів для сайту з CS-дзвінків цього місяця.' },
-  { role: 'PRODUCT MANAGER', text: 'Які баги продукту згадувались на Sales-дзвінках цього тижня?' },
-];
-
 const PromptCard: React.FC<{ role: string; text: string; width: number; tagColor?: string }> = ({
   role, text, width, tagColor = '#3d3060',
 }) => (
   <div style={{
-    width,
+    width: '100%',
+    maxWidth: width,
     background: 'white',
     borderRadius: 16,
-    padding: '20px 20px 20px 22px',
+    padding: '18px 18px 18px 20px',
     boxShadow: '0 6px 28px rgba(60,30,120,0.10)',
     display: 'flex',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
-    gap: 14,
+    gap: 12,
   }}>
     <div style={{ flex: 1 }}>
       <span style={{
@@ -69,7 +62,7 @@ const PromptCard: React.FC<{ role: string; text: string; width: number; tagColor
       }}>{role}</span>
       <p style={{
         fontFamily: "'Work Sans', sans-serif",
-        fontSize: 14.5, fontWeight: 400,
+        fontSize: 'clamp(13px, 3.5vw, 14.5px)', fontWeight: 400,
         color: '#1a1a2e', lineHeight: 1.5,
         margin: 0,
       }}>{text}</p>
@@ -103,11 +96,11 @@ export const AIInsightsSection: React.FC = () => {
   ];
 
   return (
-    <section style={{ background: 'linear-gradient(135deg, #5b2fd4 0%, #7c4dff 50%, #a97aff 100%)', padding: '100px 24px' }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 64 }}>
+    <section className="max-md:py-12 max-md:px-4 md:py-[100px] md:px-6" style={{ background: 'linear-gradient(135deg, #5b2fd4 0%, #7c4dff 50%, #a97aff 100%)' }}>
+      <div className="max-w-[1100px] mx-auto w-full flex flex-col lg:flex-row items-stretch lg:items-center gap-10 lg:gap-12">
 
         {/* Ліво — текст */}
-        <div style={{ flex: 1, maxWidth: 500 }}>
+        <div className="flex-1 w-full max-w-full lg:max-w-[500px] text-center lg:text-left mx-auto lg:mx-0">
           <span style={{
             fontFamily: "'Work Sans', sans-serif", fontSize: 12, fontWeight: 700,
             color: 'rgba(255,255,255,0.85)', background: 'rgba(255,255,255,0.18)', borderRadius: 6,
@@ -130,7 +123,7 @@ export const AIInsightsSection: React.FC = () => {
           <p style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 15, color: 'rgba(255,255,255,0.6)', lineHeight: 1.65, marginBottom: 36 }}>
             Конкретні рекомендації: який підхід обрати, на що звернути увагу і як побудувати наступний дзвінок.
           </p>
-          <button style={{
+          <button className="w-full md:w-auto max-w-sm mx-auto lg:mx-0" style={{
             fontFamily: "'Work Sans', sans-serif", fontSize: 16, fontWeight: 700,
             color: PURPLE, background: 'white', borderRadius: 999,
             padding: '16px 40px', border: 'none', cursor: 'pointer',
@@ -139,14 +132,15 @@ export const AIInsightsSection: React.FC = () => {
         </div>
 
         {/* Право — AI чат вікно */}
-        <div style={{ flex: '0 0 420px', marginLeft: 80 }}>
+        <div className="w-full max-w-[420px] mx-auto lg:max-w-[420px] lg:flex-[0_0_420px] lg:ml-0 shrink-0">
           <div style={{
             background: 'white',
             borderRadius: 20,
             boxShadow: '0 12px 48px rgba(0,8,82,0.10)',
             border: '1px solid #eeedf5',
             overflow: 'hidden',
-            height: 520,
+            height: 'min(520px, 72vh)',
+            minHeight: 360,
             display: 'flex',
             flexDirection: 'column',
           }}>
@@ -249,42 +243,49 @@ export const AIInsightsSection: React.FC = () => {
   );
 };
 
+const PROMPT_CARDS = [
+  { role: 'SALES MANAGER', text: 'Які заперечення найчастіше виникали на дзвінках цього тижня?', width: 290, tagColor: '#2d1b6e' },
+  { role: 'PRODUCT OWNER', text: 'Які фідбеки на наш продукт прозвучали на CS-дзвінках цього місяця?', width: 265, tagColor: '#4a2a9e' },
+  { role: 'MARKETING MANAGER', text: 'Які болі клієнтів згадувались на discovery-колах? Як сейлзи відповідали?', width: 270, tagColor: '#3d3060' },
+  { role: 'MARKETING LEADER', text: 'Знайди цитати клієнтів для сайту з CS-дзвінків цього місяця.', width: 255, tagColor: '#4a3580' },
+  { role: 'PRODUCT MANAGER', text: 'Які баги продукту згадувались на Sales-дзвінках цього тижня?', width: 250, tagColor: '#3d3060' },
+] as const;
+
 export const PromptsSection: React.FC = () => (
   <section style={{
     backgroundImage: 'url(/prompts-bg.png)',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    padding: '72px 24px',
+    padding: '48px 16px 56px',
     position: 'relative', overflow: 'hidden',
-  }}>
-    <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-      <div style={{ position: 'relative', height: 560 }}>
+  }}
+    className="max-md:py-12 md:py-[72px]"
+  >
+    <div className="max-w-[900px] mx-auto relative z-[1]">
+      {/* Мобільна колонка */}
+      <div className="flex flex-col gap-4 md:hidden">
+        {PROMPT_CARDS.map((p) => (
+          <PromptCard key={p.role} role={p.role} text={p.text} width={420} tagColor={p.tagColor} />
+        ))}
+      </div>
 
-        {/* SALES MANAGER — вгорі трохи правіше центру */}
+      {/* Десктоп — розкидані картки */}
+      <div className="hidden md:block relative h-[560px]">
         <div style={{ position: 'absolute', top: 10, left: '42%', transform: 'translateX(-50%)' }}>
           <PromptCard role="SALES MANAGER" text="Які заперечення найчастіше виникали на дзвінках цього тижня?" width={290} tagColor="#2d1b6e" />
         </div>
-
-        {/* PRODUCT OWNER — зліва, нижче */}
         <div style={{ position: 'absolute', top: 180, left: 10 }}>
           <PromptCard role="PRODUCT OWNER" text="Які фідбеки на наш продукт прозвучали на CS-дзвінках цього місяця?" width={265} tagColor="#4a2a9e" />
         </div>
-
-        {/* MARKETING MANAGER — справа, трохи вище */}
         <div style={{ position: 'absolute', top: 155, right: 10 }}>
           <PromptCard role="MARKETING MANAGER" text="Які болі клієнтів згадувались на discovery-колах? Як сейлзи відповідали?" width={270} tagColor="#3d3060" />
         </div>
-
-        {/* MARKETING LEADER — внизу, зміщено до центру зліва */}
         <div style={{ position: 'absolute', bottom: 10, left: '18%' }}>
           <PromptCard role="MARKETING LEADER" text="Знайди цитати клієнтів для сайту з CS-дзвінків цього місяця." width={255} tagColor="#4a3580" />
         </div>
-
-        {/* PRODUCT MANAGER — внизу справа */}
-        <div style={{ position: 'absolute', bottom: 30, right: '6%' }}>
+        <div style={{ position: 'absolute', bottom: 130, right: '6%' }}>
           <PromptCard role="PRODUCT MANAGER" text="Які баги продукту згадувались на Sales-дзвінках цього тижня?" width={250} tagColor="#3d3060" />
         </div>
-
       </div>
     </div>
   </section>
@@ -400,16 +401,6 @@ export const TestimonialSection: React.FC = () => (
 );
 
 // ─── БЛОК 8: Sales Coaching ───────────────────────────────────────────────
-const CoachingIcon = ({ type, color }: { type: string; color: string }) => {
-  const s = { width: 22, height: 22 };
-  if (type === 'mic') return <svg {...s} viewBox="0 0 24 24" fill="none"><rect x="9" y="2" width="6" height="12" rx="3" stroke={color} strokeWidth="1.8"/><path d="M5 10a7 7 0 0014 0" stroke={color} strokeWidth="1.8" strokeLinecap="round"/><line x1="12" y1="20" x2="12" y2="17" stroke={color} strokeWidth="1.8" strokeLinecap="round"/><line x1="9" y1="20" x2="15" y2="20" stroke={color} strokeWidth="1.8" strokeLinecap="round"/></svg>;
-  if (type === 'brain') return <svg {...s} viewBox="0 0 24 24" fill="none"><path d="M12 4C9 4 7 6 7 8.5c0 1-.3 1.8-.8 2.4C5.5 11.7 5 12.8 5 14c0 2.5 2 4 4 4h6c2 0 4-1.5 4-4 0-1.2-.5-2.3-1.2-3.1-.5-.6-.8-1.4-.8-2.4C17 6 15 4 12 4z" stroke={color} strokeWidth="1.8"/><line x1="12" y1="8" x2="12" y2="14" stroke={color} strokeWidth="1.8" strokeLinecap="round"/><line x1="9" y1="11" x2="15" y2="11" stroke={color} strokeWidth="1.8" strokeLinecap="round"/></svg>;
-  if (type === 'check') return <svg {...s} viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="14" height="16" rx="2" stroke={color} strokeWidth="1.8"/><path d="M7 10h6M7 14h4" stroke={color} strokeWidth="1.8" strokeLinecap="round"/><path d="M15 3l2 2 4-4" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>;
-  if (type === 'chat') return <svg {...s} viewBox="0 0 24 24" fill="none"><path d="M4 4h16v12H4z" rx="2" stroke={color} strokeWidth="1.8"/><path d="M8 20l4-4h8" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><path d="M8 9h8M8 13h5" stroke={color} strokeWidth="1.8" strokeLinecap="round"/></svg>;
-  if (type === 'trend') return <svg {...s} viewBox="0 0 24 24" fill="none"><polyline points="3,17 8,11 13,14 21,6" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><polyline points="16,6 21,6 21,11" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>;
-  return null;
-};
-
 const coachingSteps: { step: string; title: string; desc: React.ReactNode; green: boolean }[] = [
   {
     step: '01', green: false,
@@ -439,11 +430,11 @@ const coachingSteps: { step: string; title: string; desc: React.ReactNode; green
 ];
 
 export const CoachingSection: React.FC = () => (
-  <section style={{ background: '#f8f7fc', padding: '100px 24px' }}>
-    <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+  <section className="max-md:py-12 max-md:px-4 md:py-[100px] md:px-6" style={{ background: '#f8f7fc' }}>
+    <div className="max-w-[1100px] mx-auto w-full">
 
       {/* Заголовок */}
-      <div style={{ textAlign: 'center', marginBottom: 64 }}>
+      <div className="text-center max-md:mb-10 md:mb-16 max-w-2xl mx-auto px-1">
         <span style={{
           fontFamily: "'Work Sans', sans-serif", fontSize: 12, fontWeight: 700,
           color: PURPLE, background: '#f0ebff', borderRadius: 6, padding: '4px 12px',
@@ -458,7 +449,7 @@ export const CoachingSection: React.FC = () => (
           <span style={{ color: PURPLE }}>на зростання продажів</span>
         </h2>
         <p style={{
-          fontFamily: "'Work Sans', sans-serif", fontSize: 17, color: '#5a5d8d',
+          fontFamily: "'Work Sans', sans-serif", fontSize: 'clamp(15px, 3.5vw, 17px)', color: '#5a5d8d',
           lineHeight: 1.65, maxWidth: 560, margin: '0 auto',
         }}>
           П'ять кроків від запису дзвінка до реального зростання виручки команди.
@@ -466,14 +457,12 @@ export const CoachingSection: React.FC = () => (
       </div>
 
       {/* Кроки */}
-      <div style={{ display: 'flex', alignItems: 'stretch', gap: 0, position: 'relative' }}>
+      <div className="flex flex-col lg:flex-row lg:items-stretch">
         {coachingSteps.map((s, i) => (
-          <div key={s.step} style={{ flex: 1, display: 'flex', alignItems: 'stretch' }}>
-            {/* Картка */}
-            <div style={{
-              flex: 1,
+          <React.Fragment key={s.step}>
+            <div className="flex-1 min-w-0 max-md:p-5 md:p-6" style={{
               background: s.green ? 'linear-gradient(135deg, #1a7a4a 0%, #22a05e 100%)' : 'white',
-              borderRadius: 20, padding: '24px 20px',
+              borderRadius: 20,
               border: s.green ? 'none' : '1px solid #eeedf5',
               boxShadow: s.green ? '0 8px 32px rgba(26,122,74,0.35)' : '0 4px 20px rgba(0,8,82,0.06)',
               display: 'flex', flexDirection: 'column' as const, gap: 14,
@@ -487,30 +476,35 @@ export const CoachingSection: React.FC = () => (
               </div>
               <div>
                 <p style={{
-                  fontFamily: "'Work Sans', sans-serif", fontSize: 17, fontWeight: 800,
+                  fontFamily: "'Work Sans', sans-serif", fontSize: 'clamp(15px, 3.5vw, 17px)', fontWeight: 800,
                   color: s.green ? 'white' : DARK, marginBottom: 10, letterSpacing: '-0.5px', lineHeight: 1.25,
                 }}>{s.title}</p>
                 <p style={{
-                  fontFamily: "'Work Sans', sans-serif", fontSize: 13.5,
+                  fontFamily: "'Work Sans', sans-serif", fontSize: 'clamp(12.5px, 3.2vw, 13.5px)',
                   color: s.green ? 'rgba(255,255,255,0.8)' : '#5a5d8d', lineHeight: 1.65,
                 }}>{s.desc}</p>
               </div>
             </div>
 
-            {/* Стрілка між кроками */}
             {i < coachingSteps.length - 1 && (
-              <div style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                width: 32, flexShrink: 0,
-              }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 12H19M19 12L13 6M19 12L13 18"
-                    stroke={i === coachingSteps.length - 2 ? '#22a05e' : PURPLE}
-                    strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
+              <>
+                <div className="hidden lg:flex items-center justify-center w-8 shrink-0 self-center">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M5 12H19M19 12L13 6M19 12L13 18"
+                      stroke={i === coachingSteps.length - 2 ? '#22a05e' : PURPLE}
+                      strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <div className="flex lg:hidden items-center justify-center py-2" aria-hidden>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ transform: 'rotate(90deg)' }}>
+                    <path d="M5 12H19M19 12L13 6M19 12L13 18"
+                      stroke={i === coachingSteps.length - 2 ? '#22a05e' : PURPLE}
+                      strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </>
             )}
-          </div>
+          </React.Fragment>
         ))}
       </div>
 
@@ -529,7 +523,7 @@ const faqs = [
 export const FAQSection: React.FC = () => {
   const [open, setOpen] = useState<number | null>(null);
   return (
-    <section style={{ background: 'white', padding: '100px 24px' }}>
+    <section className="max-md:py-12 max-md:px-4 md:py-[100px] md:px-6" style={{ background: 'white' }}>
       <div style={{ maxWidth: 900, margin: '0 auto' }}>
         <h2 style={{
           fontFamily: "'Work Sans', sans-serif", fontSize: 'clamp(28px, 3vw, 44px)',
@@ -546,12 +540,9 @@ export const FAQSection: React.FC = () => {
             >
               <button
                 onClick={() => setOpen(open === i ? null : i)}
+                className="w-full text-left max-md:py-4 max-md:px-[18px] md:py-5 md:px-7 border-0 cursor-pointer flex items-center justify-between gap-16 transition-colors duration-200"
                 style={{
-                  width: '100%', textAlign: 'left', padding: '22px 28px',
                   background: open === i ? 'rgba(255,255,255,0.12)' : 'transparent',
-                  border: 'none', cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
-                  transition: 'background 0.2s',
                 }}
               >
                 <span style={{
@@ -567,7 +558,7 @@ export const FAQSection: React.FC = () => {
                 }}>+</span>
               </button>
               {open === i && (
-                <div style={{ padding: '0 28px 22px', background: 'rgba(255,255,255,0.08)' }}>
+                <div className="max-md:px-[18px] max-md:pb-[18px] md:px-7 md:pb-5" style={{ paddingTop: 0, background: 'rgba(255,255,255,0.08)' }}>
                   <p style={{
                     fontFamily: "'Work Sans', sans-serif", fontSize: 15, color: 'rgba(255,255,255,0.85)',
                     lineHeight: 1.65,
@@ -599,14 +590,14 @@ export const FooterSection: React.FC = () => (
       borderBottom: '1px solid rgba(255,255,255,0.06)',
       padding: '48px 24px',
     }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 24 }}>
-        <h3 style={{
+    <div className="max-w-[1100px] mx-auto flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6 px-1">
+        <h3 className="text-center md:text-left" style={{
           fontFamily: "'Work Sans', sans-serif", fontSize: 'clamp(22px, 2.5vw, 36px)',
           fontWeight: 700, letterSpacing: '-1.5px', color: 'white',
         }}>
           Почніть з Soldly Meet безкоштовно
         </h3>
-        <button style={{
+        <button className="w-full md:w-auto shrink-0" style={{
           fontFamily: "'Work Sans', sans-serif", fontSize: 16, fontWeight: 600,
           color: 'white', background: PURPLE, borderRadius: 14,
           padding: '16px 36px', border: 'none', cursor: 'pointer',
@@ -627,7 +618,7 @@ export const FooterSection: React.FC = () => (
         </div>
 
         {/* Лінки */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 32, marginBottom: 48 }}>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-8 max-md:mb-10 md:mb-12 md:gap-8">
           {Object.entries(footerLinks).map(([section, links]) => (
             <div key={section}>
               <p style={{

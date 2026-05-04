@@ -4,6 +4,9 @@ const PURPLE = '#6B2EFF';
 const DARK = '#000852';
 
 function CrmMockup() {
+  let tagFlySeq = 0;
+  const nextFlyIdx = () => Math.min(tagFlySeq++, 4);
+
   return (
     <>
       <style>{`
@@ -11,43 +14,91 @@ function CrmMockup() {
           0%, 100% { transform: translateY(0px); }
           50%       { transform: translateY(-6px); }
         }
+        /* Десктоп: плашки «вилітають» вправо (як раніше) */
         @keyframes tagFly0 {
-          0%   { opacity: 0; transform: translateX(-120px) scale(0.7); }
-          20%  { opacity: 1; transform: translateX(0px) scale(1); }
-          70%  { opacity: 1; transform: translateX(0px) scale(1); }
-          100% { opacity: 0; transform: translateX(180px) scale(0.8); }
+          0%   { opacity: 0; transform: translate3d(-6px, 2px, 0) scale(0.96); }
+          10%  { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+          40%  { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+          100% { opacity: 0; transform: translate3d(200px, -12px, 0) scale(0.35); }
         }
         @keyframes tagFly1 {
-          0%   { opacity: 0; transform: translateX(-120px) scale(0.7); }
-          20%  { opacity: 1; transform: translateX(0px) scale(1); }
-          70%  { opacity: 1; transform: translateX(0px) scale(1); }
-          100% { opacity: 0; transform: translateX(180px) scale(0.8); }
+          0%   { opacity: 0; transform: translate3d(-6px, 2px, 0) scale(0.96); }
+          10%  { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+          40%  { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+          100% { opacity: 0; transform: translate3d(220px, -18px, 0) scale(0.32); }
         }
         @keyframes tagFly2 {
-          0%   { opacity: 0; transform: translateX(-120px) scale(0.7); }
-          20%  { opacity: 1; transform: translateX(0px) scale(1); }
-          70%  { opacity: 1; transform: translateX(0px) scale(1); }
-          100% { opacity: 0; transform: translateX(180px) scale(0.8); }
+          0%   { opacity: 0; transform: translate3d(-6px, 2px, 0) scale(0.96); }
+          10%  { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+          40%  { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+          100% { opacity: 0; transform: translate3d(240px, -10px, 0) scale(0.3); }
         }
         @keyframes tagFly3 {
-          0%   { opacity: 0; transform: translateX(-120px) scale(0.7); }
-          20%  { opacity: 1; transform: translateX(0px) scale(1); }
-          70%  { opacity: 1; transform: translateX(0px) scale(1); }
-          100% { opacity: 0; transform: translateX(180px) scale(0.8); }
+          0%   { opacity: 0; transform: translate3d(-6px, 2px, 0) scale(0.96); }
+          10%  { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+          40%  { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+          100% { opacity: 0; transform: translate3d(260px, -22px, 0) scale(0.28); }
         }
         @keyframes tagFly4 {
-          0%   { opacity: 0; transform: translateX(-120px) scale(0.7); }
-          20%  { opacity: 1; transform: translateX(0px) scale(1); }
-          70%  { opacity: 1; transform: translateX(0px) scale(1); }
-          100% { opacity: 0; transform: translateX(180px) scale(0.8); }
+          0%   { opacity: 0; transform: translate3d(-6px, 2px, 0) scale(0.96); }
+          10%  { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+          40%  { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+          100% { opacity: 0; transform: translate3d(230px, -14px, 0) scale(0.3); }
+        }
+        /* Мобілка: плашки залітають у середину папки (без вильоту за межі), під шаром зображення */
+        @keyframes tagIntoCrm {
+          0%   { opacity: 0; transform: translate3d(-12px, 4px, 0) scale(0.92); }
+          10%  { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+          40%  { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+          75%  { opacity: 0.85; transform: translate3d(
+            calc(var(--to-x) * var(--reach-x) * 0.82),
+            calc(var(--to-y) * var(--reach-y) * 0.82),
+            0
+          ) scale(0.32); }
+          100% { opacity: 0; transform: translate3d(
+            calc(var(--to-x) * var(--reach-x)),
+            calc(var(--to-y) * var(--reach-y)),
+            0
+          ) scale(0.07); }
+        }
+        .crm-floating-tag {
+          will-change: transform, opacity;
+        }
+        @media (min-width: 768px) {
+          .crm-floating-tag[data-fly="0"] { animation: tagFly0 3.2s ease-in-out infinite; }
+          .crm-floating-tag[data-fly="1"] { animation: tagFly1 3.2s ease-in-out infinite; }
+          .crm-floating-tag[data-fly="2"] { animation: tagFly2 3.2s ease-in-out infinite; }
+          .crm-floating-tag[data-fly="3"] { animation: tagFly3 3.2s ease-in-out infinite; }
+          .crm-floating-tag[data-fly="4"] { animation: tagFly4 3.2s ease-in-out infinite; }
+        }
+        @media (max-width: 767px) {
+          .crm-floating-tag {
+            --to-x: var(--mob-x, 0px);
+            --to-y: calc(var(--mob-y, 0px) + var(--mob-y-extra, 0px));
+            /* reach ~0.9: майже до центру папки; моб. Y задаємо з «підлогою», бо min(px,vh) давав занадто мало */
+            --reach-x: 0.78;
+            --reach-y: 0.88;
+            position: relative;
+            z-index: 6;
+            animation: tagIntoCrm 4.2s ease-in-out infinite;
+          }
+          .crm-mockup-mobile { overflow: visible; --reach-x: 0.78; --reach-y: 0.88; }
+          .crm-tag-line { padding-left: 0 !important; }
+          .crm-floating-tag { white-space: normal !important; max-width: min(340px, calc(100vw - 2rem)); text-align: center; font-size: 12px !important; padding: 8px 14px !important; line-height: 1.35; }
         }
       `}</style>
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 40px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32 }}>
+      <div
+        className="crm-mockup-mobile flex max-md:flex-col md:flex-row md:items-center md:justify-between md:gap-8 lg:gap-[72px] lg:px-10 items-center"
+        style={{
+          maxWidth: 1100, margin: '0 auto', padding: '0 16px', position: 'relative', gap: 40,
+          ['--mob-y-extra' as string]: 'clamp(72px, 12vh, 120px)',
+        }}
+      >
 
         {/* Фіолетовий blob */}
         <div style={{
-          position: 'absolute', right: 80, top: '50%', transform: 'translateY(-50%)',
-          width: 380, height: 280,
+          position: 'absolute', right: '10%', top: '30%', transform: 'translateY(-50%)',
+          width: 'min(280px, 70vw)', height: 200,
           borderRadius: '50%',
           background: 'radial-gradient(circle, rgba(107,46,255,0.22) 0%, transparent 70%)',
           filter: 'blur(40px)',
@@ -56,100 +107,80 @@ function CrmMockup() {
         }} />
 
         {/* S-логотип — великий */}
-        <div style={{ flexShrink: 0, zIndex: 1, animation: 'crmFloat 4s ease-in-out infinite' }}>
-          <img src="/soldly-s-logo.png" alt="Soldly" style={{ width: 260, height: 260, objectFit: 'contain' }} />
+        <div className="z-[1] max-md:z-[4] shrink-0 max-md:order-2 md:order-1" style={{ animation: 'crmFloat 4s ease-in-out infinite' }}>
+          <img src="/soldly-s-logo.png" alt="Soldly" className="w-[min(200px,45vw)] h-[min(200px,45vw)] sm:w-52 sm:h-52 md:w-[260px] md:h-[260px] mx-auto object-contain" />
         </div>
 
-        {/* Теги посередині з анімацією польоту */}
-        <div style={{ flex: 1, position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column' as const, gap: 14, padding: '0 24px' }}>
+        {/* Теги — десктоп: виліт вправо; мобілка: в папку CRM */}
+        <div className="flex-1 z-[1] max-md:z-[6] relative flex flex-col gap-3 sm:gap-3.5 py-2 px-2 md:px-6 max-md:order-1 md:order-2 w-full max-w-lg md:max-w-none max-md:overflow-visible">
           {[
-            { label: "Ім'я: Василь",         row: [{ label: "Ім'я: Василь", delay: '0s' }, { label: 'Місто: Львів', delay: '0.3s' }], isDouble: true },
-            { label: 'Продукт: навушники PROJ', delay: '0.6s', paddingLeft: 60, isDouble: false },
-            { label: 'Бюджет: 5000 грн',       delay: '0.9s', paddingLeft: 0,  isDouble: false },
-            { label: 'Мета: подарунок дівчині', delay: '1.2s', paddingLeft: 80, isDouble: false },
+            {
+              row: [
+                { label: "Ім'я: Василь", delay: '0s', desk: { x: '128px', y: '22px' }, mob: { x: '0px', y: 'max(400px, min(620px, 82vh))' } },
+                { label: 'Місто: Львів', delay: '0.35s', desk: { x: '152px', y: '26px' }, mob: { x: '0px', y: 'max(385px, min(600px, 79vh))' } },
+              ],
+            },
+            { label: 'Продукт: навушники PROJ', delay: '0.65s', desk: { x: '168px', y: '44px' }, mob: { x: '2px', y: 'max(330px, min(530px, 70vh))' }, paddingLeft: 60 },
+            { label: 'Бюджет: 5000 грн', delay: '0.95s', desk: { x: '182px', y: '56px' }, mob: { x: '0px', y: 'max(285px, min(475px, 62vh))' }, paddingLeft: 0 },
+            { label: 'Мета: подарунок дівчині', delay: '1.25s', desk: { x: '198px', y: '70px' }, mob: { x: '-2px', y: 'max(245px, min(420px, 54vh))' }, paddingLeft: 80 },
           ].map((item, i) => {
-            const tagStyle = (delay: string, idx: number) => ({
-              display: 'inline-block' as const,
-              background: PURPLE, color: 'white',
-              fontFamily: "'Work Sans', sans-serif", fontSize: 14, fontWeight: 600,
-              borderRadius: 999, padding: '10px 22px',
-              boxShadow: '0 4px 20px rgba(107,46,255,0.28)',
-              whiteSpace: 'nowrap' as const,
-              animation: `tagFly${idx} 3s ease-in-out infinite`,
-              animationDelay: delay,
-            });
-            if (item.isDouble && item.row) {
+            const tagEl = (label: string, delay: string, mob: { x: string; y: string }, key: string) => {
+              const fly = nextFlyIdx();
               return (
-                <div key={i} style={{ display: 'flex', gap: 12 }}>
-                  {item.row.map((r, ri) => (
-                    <div key={ri} style={tagStyle(r.delay, i + ri)}>{r.label}</div>
-                  ))}
+                <div
+                  key={key}
+                  className="crm-floating-tag"
+                  data-fly={fly}
+                  style={{
+                    display: 'inline-block',
+                    background: PURPLE,
+                    color: 'white',
+                    fontFamily: "'Work Sans', sans-serif",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    borderRadius: 999,
+                    padding: '10px 22px',
+                    boxShadow: '0 4px 20px rgba(107,46,255,0.28)',
+                    whiteSpace: 'nowrap' as const,
+                    animationDelay: delay,
+                    ['--mob-x' as string]: mob.x,
+                    ['--mob-y' as string]: mob.y,
+                  }}
+                >
+                  {label}
+                </div>
+              );
+            };
+            if ('row' in item && item.row) {
+              const rows = item.row;
+              return (
+                <div key={i} className="flex flex-wrap justify-center gap-2 md:justify-start">
+                  {rows.map((r, ri) => tagEl(r.label, r.delay, r.mob, `${i}-${ri}`))}
                 </div>
               );
             }
+            const single = item as { label: string; delay: string; desk: { x: string; y: string }; mob: { x: string; y: string }; paddingLeft: number };
             return (
-              <div key={i} style={{ paddingLeft: item.paddingLeft }}>
-                <div style={tagStyle(item.delay!, i + 1)}>{item.label}</div>
+              <div key={single.label + i} className="crm-tag-line flex justify-center md:justify-start" style={{ paddingLeft: single.paddingLeft }}>
+                {tagEl(single.label, single.delay, single.mob, String(i))}
               </div>
             );
           })}
         </div>
 
         {/* CRM папка — велика */}
-        <div style={{ flexShrink: 0, zIndex: 1, animation: 'crmFloat 4s ease-in-out infinite', animationDelay: '1s', position: 'relative' }}>
-          <img src="/crm-folder.png" alt="CRM" style={{ width: 340, objectFit: 'contain', display: 'block' }} />
+        <div className="max-md:order-3 md:order-3 shrink-0 z-[1] max-md:z-20 max-md:relative w-full max-w-[min(340px,92vw)] mx-auto md:mx-0 md:w-auto" style={{ animation: 'crmFloat 4s ease-in-out infinite', animationDelay: '1s', position: 'relative' }}>
+          <img src="/crm-folder.png" alt="CRM" className="w-full h-auto object-contain block max-w-[340px] mx-auto" />
           <span style={{
-            position: 'absolute', top: 16, left: 24,
+            position: 'absolute', top: 'clamp(10px, 3vw, 16px)', left: 'clamp(16px, 5vw, 24px)',
             fontFamily: "'Work Sans', sans-serif",
-            fontSize: 17, fontWeight: 800,
+            fontSize: 'clamp(14px, 3.5vw, 17px)', fontWeight: 800,
             color: DARK, letterSpacing: '-0.3px',
           }}>ВАША CRM</span>
         </div>
 
       </div>
     </>
-  );
-}
-
-function ReportMockup() {
-  const bars = [
-    { label: 'Пн', value: 60 },
-    { label: 'Вт', value: 85 },
-    { label: 'Ср', value: 45 },
-    { label: 'Чт', value: 92 },
-    { label: 'Пт', value: 70 },
-  ];
-  const insights = [
-    { text: 'Найчастіше заперечення: «дорого»', count: '12 дзвінків' },
-    { text: 'Середня тривалість демо', count: '28 хв' },
-    { text: 'Конверсія після демо', count: '34%' },
-  ];
-  return (
-    <div style={{
-      background: 'white', borderRadius: 20, padding: '24px',
-      boxShadow: '0 12px 48px rgba(0,8,82,0.1)', border: '1px solid #eeedf5',
-    }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-        <p style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 14, fontWeight: 700, color: DARK }}>AI-звіт · Цей тиждень</p>
-        <span style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 11, fontWeight: 600, color: PURPLE, background: '#f0ebff', borderRadius: 6, padding: '3px 8px' }}>Автоматично</span>
-      </div>
-      <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8, marginBottom: 20, height: 80 }}>
-        {bars.map((b, i) => (
-          <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-            <div style={{ width: '100%', borderRadius: 6, height: `${b.value}%`, background: PURPLE }} />
-            <span style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 10, color: '#b0aed0' }}>{b.label}</span>
-          </div>
-        ))}
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-        {insights.map((ins, i) => (
-          <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f8f7fc', borderRadius: 10, padding: '10px 14px' }}>
-            <span style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 13, color: '#3d3f6e' }}>{ins.text}</span>
-            <span style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 13, fontWeight: 700, color: DARK }}>{ins.count}</span>
-          </div>
-        ))}
-      </div>
-    </div>
   );
 }
 
@@ -216,7 +247,7 @@ function CalendarMockup() {
       </div>
 
       {/* Сітка */}
-      <div style={{ display: 'flex', overflowY: 'hidden' as const, maxHeight: 420 }}>
+      <div className="max-md:overflow-x-auto max-md:overflow-y-hidden max-md:-mx-1 max-md:px-1 md:overflow-visible [-webkit-overflow-scrolling:touch]" style={{ display: 'flex', maxHeight: 420 }}>
         {/* Колонка годин */}
         <div style={{ width: 48, flexShrink: 0, borderRight: '1px solid #f0eff5' }}>
           <div style={{ height: 36 }} />
@@ -229,7 +260,7 @@ function CalendarMockup() {
 
         {/* Колонки днів */}
         {days.map((day, di) => (
-          <div key={di} style={{ flex: 1, borderRight: di < 6 ? '1px solid #f0eff5' : 'none', position: 'relative', minWidth: 0 }}>
+          <div key={di} style={{ flex: '1 0 76px', borderRight: di < 6 ? '1px solid #f0eff5' : 'none', position: 'relative', minWidth: 76 }}>
             {/* Заголовок дня */}
             <div style={{
               height: 36, display: 'flex', flexDirection: 'column' as const,
@@ -281,11 +312,11 @@ const FeatureSection: React.FC = () => (
   <div>
 
     {/* ── СЕКЦІЯ 1: Календар ── */}
-    <section style={{ padding: '100px 48px', background: 'linear-gradient(135deg, #5b2fd4 0%, #7c4dff 50%, #a97aff 100%)', overflow: 'hidden' }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 72 }}>
+    <section className="max-md:py-12 max-md:px-4 md:py-[100px] md:px-12 overflow-hidden" style={{ background: 'linear-gradient(135deg, #5b2fd4 0%, #7c4dff 50%, #a97aff 100%)' }}>
+      <div className="max-w-[1200px] mx-auto flex flex-col lg:flex-row items-center max-md:gap-10 lg:gap-[72px]">
 
         {/* Ліво — компонент календаря */}
-        <div style={{ flex: '0 0 580px', position: 'relative' }}>
+        <div className="w-full max-w-[580px] lg:flex-[0_0_580px] lg:max-w-none mx-auto lg:mx-0 relative shrink-0">
           <div style={{
             position: 'absolute', inset: -30,
             background: 'radial-gradient(ellipse at center, rgba(107,46,255,0.25) 0%, transparent 70%)',
@@ -298,7 +329,7 @@ const FeatureSection: React.FC = () => (
         </div>
 
         {/* Право — текст */}
-        <div style={{ flex: 1 }}>
+        <div className="w-full min-w-0 text-center lg:text-left">
           <span style={{
             fontFamily: "'Work Sans', sans-serif", fontSize: 12, fontWeight: 700,
             color: 'rgba(255,255,255,0.85)', background: 'rgba(255,255,255,0.18)', borderRadius: 6,
@@ -336,7 +367,7 @@ const FeatureSection: React.FC = () => (
               </div>
             ))}
           </div>
-          <button style={{
+          <button className="w-full md:w-auto max-w-md mx-auto lg:mx-0" style={{
             fontFamily: "'Work Sans', sans-serif", fontSize: 15, fontWeight: 600,
             color: PURPLE, background: 'white', borderRadius: 999,
             padding: '14px 32px', border: 'none', cursor: 'pointer',
@@ -348,7 +379,7 @@ const FeatureSection: React.FC = () => (
     </section>
 
     {/* ── СЕКЦІЯ 2: Дашборд аналітики менеджерів ── */}
-    <section style={{ padding: '100px 48px', background: '#f8f7fc', borderTop: '1px solid #f0eff5' }}>
+    <section className="max-md:py-12 max-md:px-4 md:py-[100px] md:px-12 bg-[#f8f7fc] border-t border-[#f0eff5]">
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
 
         {/* Заголовок */}
@@ -487,15 +518,17 @@ const FeatureSection: React.FC = () => (
 );
 
 export const CrmSection: React.FC = () => (
-  <section style={{ padding: '100px 0 80px', background: 'white', borderTop: '1px solid #f0eff5' }}>
-    <div style={{ textAlign: 'center', marginBottom: 64, padding: '0 24px' }}>
+  <section className="max-md:py-12 max-md:pt-16 max-md:overflow-visible md:py-[100px] md:pt-[100px] bg-white border-t border-[#f0eff5]">
+    <div className="text-center max-md:mb-10 md:mb-16 px-4">
       <h2 style={{
         fontFamily: "'Work Sans', sans-serif",
-        fontSize: 'clamp(28px, 3.5vw, 48px)',
-        fontWeight: 900, letterSpacing: '-2px', lineHeight: 1.1,
+        fontSize: 'clamp(22px, 5.5vw, 48px)',
+        fontWeight: 900, letterSpacing: '-2px', lineHeight: 1.12,
         color: DARK, marginBottom: 16, textTransform: 'uppercase' as const,
       }}>
-        Передавайте аналітику <span style={{ color: PURPLE }}>з Soldly в CRM</span><br />автоматично
+        Передавайте аналітику <span style={{ color: PURPLE }}>з Soldly в CRM</span>
+        <br className="hidden md:inline" />
+        <span className="md:hidden"> </span>автоматично
       </h2>
       <p style={{ fontFamily: "'Work Sans', sans-serif", fontSize: 16, color: '#8b8db0', maxWidth: 480, margin: '0 auto' }}>
         Поля заповнюються самі, а менеджери зосереджуються на продажах.
